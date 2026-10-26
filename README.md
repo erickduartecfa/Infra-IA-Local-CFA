@@ -1,0 +1,33 @@
+﻿# Projeto IA Local — Conselho Federal de Administração (CFA)
+
+## Visão Geral
+Este projeto tem como objetivo desenvolver e implantar uma Inteligência Artificial local (on-premises) para o **Conselho Federal de Administração (CFA)**, iniciando como um chatbot institucional inteligente para o portal web e, futuramente, expandindo para conexão com os sistemas internos corporativos dos colaboradores.
+
+## Hardware de Teste (PoC Atual)
+- **Sistema Operacional:** Oracle Linux nativo (bare metal, sem virtualização)
+- **Processador:** Intel Core i7-8700 (6 núcleos / 12 threads)
+- **Memória RAM:** 32 GB DDR4
+- **Placa de Vídeo:** NVIDIA GeForce GTX 1060 6GB GDDR5
+- **Armazenamento:** SSD 1 TB
+
+## Segurança e Infraestrutura
+- **Firewall de Perímetro:** Sophos Firewall (WAF, IPS, DoS Protection)
+- **Firewall de Host:** firewalld + SELinux (Oracle Linux)
+- **Isolamento:** Ollama (11434) e Qdrant (6333) vinculados estritamente ao 127.0.0.1
+
+## Estrutura do Repositório
+`
+Projeto IA Local CFA/
+├── data/
+│   └── raw_documents/          # PDFs e normas oficiais do CFA para indexação
+├── docs/
+│   ├── GUIA_IMPLANTACAO_IA_CFA.md # Roteiro técnico passo a passo
+│   └── CONVERSA_E_PLANEJAMENTO.md # Histórico das decisões e alinhamentos
+├── src/
+│   ├── indexar.py              # Pipeline RAG (fatiamento e embeddings no Qdrant)
+│   ├── app.py                  # API FastAPI com guardrails e rate limit
+│   └── guardrails.py           # Sanitização anti-prompt injection
+└── README.md
+`
+
+Consulte o arquivo docs/GUIA_IMPLANTACAO_IA_CFA.md para o passo a passo completo.

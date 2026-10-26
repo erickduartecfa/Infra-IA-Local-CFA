@@ -1,0 +1,21 @@
+# Ambientes virtuais Python
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+
+# Armazenamento vetorial e dados locais pesados
+qdrant_storage/
+data/raw_documents/*.pdf
+!data/raw_documents/.gitkeep
+
+# Arquivos de log e temporários
+*.log
+.DS_Store
+Thumbs.db
+
+# Configurações locais / segredos
+.env
+*.pem
+*.key
