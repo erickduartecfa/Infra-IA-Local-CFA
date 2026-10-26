@@ -69,14 +69,15 @@ def responder(p: Pergunta):
     except Exception as e:
         raise HTTPException(status_code=503, detail=f"Falha ao conectar com o motor de embeddings (Ollama): {e}")
 
-    # 2. Buscar trechos correspondentes no Qdrant
+    # 2. Buscar trechos correspondentes no Qdrant (compatível com qdrant-client >= 1.16)
     try:
-        busca = qdrant.search(
+        resultado = qdrant.query_points(
             collection_name=COLLECTION_NAME,
-            query_vector=emb,
+            query=emb,
             limit=3,
             score_threshold=0.45
         )
+        busca = resultado.points
     except Exception as e:
         raise HTTPException(status_code=503, detail=f"Falha ao consultar a base de conhecimento (Qdrant): {e}")
     

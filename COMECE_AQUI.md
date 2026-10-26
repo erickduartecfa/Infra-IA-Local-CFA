@@ -12,7 +12,7 @@ Este repositório contém todo o planejamento, código-fonte e roteiro operacion
 * **Modelos Escolhidos (Cabem com folga nos 6GB de VRAM):**
   * `qwen2.5:7b` (~4.7 GB) para raciocínio e geração de respostas em português.
   * `bge-m3` (~1.1 GB) para busca semântica em normas e PDFs.
-* **Regra de Ouro da Fase 1:** **100% Localhost (`127.0.0.1`)**. Nada de abrir portas ou alterar a rede do CFA agora.
+* **Status da Fase 1:** **100% Concluída e Validada em Localhost (`127.0.0.1`)!**
 
 ---
 
@@ -36,14 +36,14 @@ A IA guiará você passo a passo com os comandos exatos para rodar no terminal d
 | **Fase 1 - Passo 1** | Validar GPU e driver NVIDIA (`nvidia-smi` - branch 580) no Oracle Linux 10 | ✅ **Concluído** |
 | **Fase 1 - Passo 2** | Instalar Ollama e configurar serviço systemd em `127.0.0.1` | ✅ **Concluído** |
 | **Fase 1 - Passo 3** | Baixar e validar modelos `qwen2.5:7b` e `bge-m3` | ✅ **Concluído** |
-| **Fase 1 - Passo 4** | Subir Qdrant (Docker) em `127.0.0.1:6333` | ⏳ **PRÓXIMO PASSO** |
-| **Fase 1 - Passo 5** | Indexar PDFs do CFA e testar chat local via FastAPI | ⏳ A Fazer |
-| **Fase 2** | Alinhamento com técnico de redes, Sophos Firewall e SSL | ⏳ Futuro |
+| **Fase 1 - Passo 4** | Instalar Docker CE e subir Qdrant em `127.0.0.1:6333` | ✅ **Concluído** |
+| **Fase 1 - Passo 5 a 7** | Ambiente Python (`venv`), indexação de PDFs do CFA e API FastAPI validada | ✅ **Concluído** |
+| **Fase 2** | Alinhamento com técnico de redes, Sophos Firewall, Nginx/SSL e Widget Web | ⏳ **PRÓXIMO PASSO** |
 
 ---
 
 ## 📚 4. Documentos de Referência Rápida
 
-* [GUIA_IMPLANTACAO_IA_CFA.md](docs/GUIA_IMPLANTACAO_IA_CFA.md): Manual técnico passo a passo com todos os comandos de terminal.
+* [GUIA_IMPLANTACAO_IA_CFA.md](docs/GUIA_IMPLANTACAO_IA_CFA.md): Manual técnico passo a passo com todos os comandos de terminal validados.
 * [GUIA_SINCRONIZACAO_E_ATUALIZACAO.md](docs/GUIA_SINCRONIZACAO_E_ATUALIZACAO.md): Como atualizar o Git e registrar etapas concluídas.
 * [CONVERSA_E_PLANEJAMENTO.md](docs/CONVERSA_E_PLANEJAMENTO.md): Histórico e justificativas técnicas das decisões tomadas.
