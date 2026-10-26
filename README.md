@@ -1,4 +1,11 @@
-﻿# Projeto IA Local — Conselho Federal de Administração (CFA)
+# Projeto IA Local — Conselho Federal de Administração (CFA)
+
+## Repositório Oficial
+* **URL:** `https://github.com/erickduartecfa/Infra-IA-Local-CFA.git`
+* **Clone para a equipe:**
+  ```bash
+  git clone https://github.com/erickduartecfa/Infra-IA-Local-CFA.git
+  ```
 
 ## Visão Geral
 Este projeto tem como objetivo desenvolver e implantar uma Inteligência Artificial local (on-premises) para o **Conselho Federal de Administração (CFA)**, iniciando como um chatbot institucional inteligente para o portal web e, futuramente, expandindo para conexão com os sistemas internos corporativos dos colaboradores.
@@ -16,18 +23,19 @@ Este projeto tem como objetivo desenvolver e implantar uma Inteligência Artific
 - **Isolamento:** Ollama (11434) e Qdrant (6333) vinculados estritamente ao 127.0.0.1
 
 ## Estrutura do Repositório
-`
-Projeto IA Local CFA/
+```
+Infra-IA-Local-CFA/
 ├── data/
-│   └── raw_documents/          # PDFs e normas oficiais do CFA para indexação
+│   └── raw_documents/             # PDFs e normas oficiais do CFA para indexação
 ├── docs/
-│   ├── GUIA_IMPLANTACAO_IA_CFA.md # Roteiro técnico passo a passo
-│   └── CONVERSA_E_PLANEJAMENTO.md # Histórico das decisões e alinhamentos
+│   ├── GUIA_IMPLANTACAO_IA_CFA.md    # Roteiro técnico passo a passo
+│   └── CONVERSA_E_PLANEJAMENTO.md    # Histórico das decisões e alinhamentos
 ├── src/
-│   ├── indexar.py              # Pipeline RAG (fatiamento e embeddings no Qdrant)
-│   ├── app.py                  # API FastAPI com guardrails e rate limit
-│   └── guardrails.py           # Sanitização anti-prompt injection
+│   ├── indexar.py                 # Pipeline RAG (fatiamento e embeddings no Qdrant)
+│   └── app.py                     # API FastAPI com guardrails e rate limit
+├── GEMINI.md                      # Contexto automático lido pelo Antigravity
+├── requirements.txt               # Dependências Python
 └── README.md
-`
+```
 
-Consulte o arquivo docs/GUIA_IMPLANTACAO_IA_CFA.md para o passo a passo completo.
+Consulte o arquivo [GUIA_IMPLANTACAO_IA_CFA.md](docs/GUIA_IMPLANTACAO_IA_CFA.md) para o passo a passo completo.
