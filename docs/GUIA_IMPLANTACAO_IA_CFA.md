@@ -1,6 +1,6 @@
 # Guia Técnico de Implantação: IA Local Institucional — CFA
 
-Este roteiro operacional detalha a implantação da Prova de Conceito (PoC) da IA Local do **Conselho Federal de Administração (CFA)** no hardware atual (**Intel Core i7-8700, 32GB RAM, NVIDIA GTX 1060 6GB**) rodando **Oracle Linux nativo (bare metal)**.
+Este roteiro operacional detalha a implantação da Prova de Conceito (PoC) da IA Local do **Conselho Federal de Administração (CFA)** no hardware atual (**Intel Core i7-8700, 32GB RAM, NVIDIA GTX 1060 6GB**) rodando **Oracle Linux 10.2 nativo (bare metal)** no servidor `bulma`.
 
 O projeto está dividido em duas fases estratégicas:
 * **Fase 1 (O que você pode fazer AGORA):** Instalação e testes 100% locais na máquina, sem qualquer alteração na rede, sem abrir portas externas e sem risco à infraestrutura.
@@ -13,10 +13,10 @@ O projeto está dividido em duas fases estratégicas:
   
   [ FASE 1: AGORA - 100% LOCAL ]           [ FASE 2: COM O TÉCNICO DE REDES ]
   +--------------------------------+       +------------------------------------+
-  | 1. Validação de GPU & CUDA     |       | 8. Definição de IP / VLAN no CFA   |
-  | 2. Instalação do Ollama        |  ==>  | 9. Ajustes de firewalld & SELinux  |
-  | 3. Download dos Modelos        |       | 10. Regras no Sophos Firewall/WAF  |
-  | 4. Subida do Qdrant (Docker)   |       | 11. Reverse Proxy Nginx + HTTPS    |
+  | 1. [OK] GPU & CUDA (Branch 580)|       | 8. Definição de IP / VLAN no CFA   |
+  | 2. [OK] Instalação do Ollama   |  ==>  | 9. Ajustes de firewalld & SELinux  |
+  | 3. [OK] Download dos Modelos   |       | 10. Regras no Sophos Firewall/WAF  |
+  | 4. [->] Subida Qdrant (Docker) |       | 11. Reverse Proxy Nginx + HTTPS    |
   | 5. Ambiente Python & RAG       |       | 12. Publicação do Widget no Site   |
   | 6. Indexação de PDFs de Teste  |       +------------------------------------+
   | 7. Teste de Pergunta/Resposta  |
@@ -30,7 +30,7 @@ O projeto está dividido em duas fases estratégicas:
 
 ---
 
-## Passo 1: Verificar e Preparar a GPU (NVIDIA GTX 1060 6GB)
+## Passo 1: Verificar e Preparar a GPU (NVIDIA GTX 1060 6GB) — ✅ CONCLUÍDO
 
 Abra o terminal do Oracle Linux e verifique se o driver já está instalado:
 ```bash
@@ -38,31 +38,46 @@ nvidia-smi
 ```
 
 ### Cenário A: Se o comando exibir a tabela da GPU
-Se aparecer `GeForce GTX 1060 6GB`, Driver Version e CUDA Version, **a GPU está pronta**. Pule para o Passo 2.
+Se aparecer `GeForce GTX 1060 6GB`, Driver Version (`580.x`) e CUDA Version, **a GPU está pronta**. Pule para o Passo 2.
 
-### Cenário B: Se der "command not found" (Instalar driver no Oracle Linux)
+### Cenário B: Instalação no Oracle Linux 10 (Procedimento Validado para GTX 1060 / Pascal)
+No Oracle Linux 10 (`rhel10`), o `dnf module` foi descontinuado e os drivers 590+ / `kmod-nvidia-open` não suportam a arquitetura Pascal (GTX 1060). Deve-se fixar a branch proprietária **580**:
+
 ```bash
-# 1. Atualizar pacotes e instalar ferramentas básicas
+# 1. Atualizar pacotes e instalar ferramentas e headers do kernel atual
 sudo dnf upgrade -y
 sudo dnf install -y oracle-epel-release-el$(rpm -E %{rhel})
 sudo dnf groupinstall -y "Development Tools"
-sudo dnf install -y kernel-uek-devel-$(uname -r) kernel-headers dkms git curl jq
+sudo dnf install -y dkms kernel-uek-devel-$(uname -r) kernel-headers git curl jq || sudo dnf install -y dkms kernel-devel-$(uname -r)
 
-# 2. Adicionar repositório CUDA da NVIDIA para RHEL/Oracle Linux
+# 2. Adicionar repositório CUDA da NVIDIA para RHEL/Oracle Linux 10
 sudo dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel$(rpm -E %{rhel})/x86_64/cuda-rhel$(rpm -E %{rhel}).repo
+sudo dnf clean expire-cache
 
-# 3. Instalar o driver e toolkit
-sudo dnf module install -y nvidia-driver:latest-dkms
-sudo dnf install -y cuda-toolkit
+# 3. Instalar o driver proprietário branch 580 (compatível com GTX 1060) e CUDA Toolkit
+sudo dnf install -y \
+  kmod-nvidia-latest-dkms-3:580.196.07-1.el10 \
+  nvidia-driver-cuda-3:580.196.07-1.el10 \
+  nvidia-driver-cuda-libs-3:580.196.07-1.el10 \
+  nvidia-kmod-common-3:580.196.07-1.el10 \
+  nvidia-modprobe-3:580.196.07-1.el10 \
+  nvidia-persistenced-3:580.196.07-1.el10 \
+  cuda-toolkit \
+  --exclude="kmod-nvidia-open*"
 
-# 4. Reiniciar a máquina para carregar o módulo do kernel
+# 4. Travar versão na branch 580 para evitar upgrades incompatíveis (610/615+)
+sudo dnf install -y 'dnf-command(versionlock)'
+sudo dnf versionlock add "*nvidia*"
+
+# 5. Conferir compilação do módulo DKMS e reiniciar
+dkms status
 sudo reboot
 ```
 Após o reinício, execute `nvidia-smi` novamente para confirmar.
 
 ---
 
-## Passo 2: Instalar o Ollama (Motor Local de IA)
+## Passo 2: Instalar o Ollama (Motor Local de IA) — ✅ CONCLUÍDO
 
 O Ollama gerencia o uso da GPU e expõe a inferência localmente.
 
@@ -96,7 +111,7 @@ sudo systemctl restart ollama
 
 ---
 
-## Passo 3: Baixar os Modelos Otimizados no SSD
+## Passo 3: Baixar os Modelos Otimizados no SSD — ✅ CONCLUÍDO
 
 Baixe os dois modelos necessários diretamente para o disco:
 
@@ -117,7 +132,7 @@ ollama run qwen2.5:7b "Olá! Você está operacional no Conselho Federal de Admi
 
 ---
 
-## Passo 4: Subir o Banco Vetorial Local (Qdrant)
+## Passo 4: Subir o Banco Vetorial Local (Qdrant) — ⏳ PRÓXIMO PASSO
 
 O Qdrant armazenará os trechos das normas e resoluções do CFA com seus vetores matemáticos.
 
