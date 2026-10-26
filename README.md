@@ -1,6 +1,6 @@
 # Projeto IA Local — Conselho Federal de Administração (CFA)
 
-> **Projeto Atualizado ?** Comece lendo o [**COMECE_AQUI.md**](COMECE_AQUI.md) para entender o status atual e como usar o Antigravity em 30 segundos!
+> **Projeto Atualizado. ** Comece lendo o [**COMECE_AQUI.md**](COMECE_AQUI.md) para entender o status atual e como usar o Antigravity em 30 segundos!
 
 ---
 
