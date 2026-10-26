@@ -1,5 +1,9 @@
 # Projeto IA Local — Conselho Federal de Administração (CFA)
 
+> 🚀 **Novo na equipe?** Comece lendo o [**COMECE_AQUI.md**](COMECE_AQUI.md) para entender o status atual e como usar o Antigravity em 30 segundos!
+
+---
+
 ## Repositório Oficial
 * **URL:** `https://github.com/erickduartecfa/Infra-IA-Local-CFA.git`
 * **Clone para a equipe:**
@@ -29,10 +33,13 @@ Infra-IA-Local-CFA/
 │   └── raw_documents/             # PDFs e normas oficiais do CFA para indexação
 ├── docs/
 │   ├── GUIA_IMPLANTACAO_IA_CFA.md    # Roteiro técnico passo a passo
+│   ├── GUIA_SINCRONIZACAO_E_ATUALIZACAO.md # Como manter a equipe alinhada no Git
+│   ├── GUIA_COLABORACAO_EQUIPE.md    # Onboarding da equipe no Antigravity
 │   └── CONVERSA_E_PLANEJAMENTO.md    # Histórico das decisões e alinhamentos
 ├── src/
 │   ├── indexar.py                 # Pipeline RAG (fatiamento e embeddings no Qdrant)
 │   └── app.py                     # API FastAPI com guardrails e rate limit
+├── COMECE_AQUI.md                 # Guia de entrada rápida para a equipe
 ├── GEMINI.md                      # Contexto automático lido pelo Antigravity
 ├── requirements.txt               # Dependências Python
 └── README.md
