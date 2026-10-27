@@ -4,6 +4,9 @@ Bem-vindo(a) à equipe do **Projeto IA Local do CFA**!
 
 Este repositório contém todo o planejamento, código-fonte e roteiro operacional para implantar a Inteligência Artificial local (on-premises) e soberana do **Conselho Federal de Administração**.
 
+> 📌 **NOVO INTEGRANTE OU RETOMANDO OS TRABALHOS?**  
+> Leia primeiro o arquivo [**CONTEXTO_ATUAL_DO_PROJETO.md**](CONTEXTO_ATUAL_DO_PROJETO.md) para ver exatamente o que já está rodando no servidor `bulma`, como ligar a API, como conversar com a IA e como adicionar novos PDFs!
+
 ---
 
 ## ⚡ 1. Resumo em 30 Segundos
@@ -38,12 +41,13 @@ A IA guiará você passo a passo com os comandos exatos para rodar no terminal d
 | **Fase 1 - Passo 3** | Baixar e validar modelos `qwen2.5:7b` e `bge-m3` | ✅ **Concluído** |
 | **Fase 1 - Passo 4** | Instalar Docker CE e subir Qdrant em `127.0.0.1:6333` | ✅ **Concluído** |
 | **Fase 1 - Passo 5 a 7** | Ambiente Python (`venv`), indexação de PDFs do CFA e API FastAPI validada | ✅ **Concluído** |
-| **Fase 2** | Alinhamento com técnico de redes, Sophos Firewall, Nginx/SSL e Widget Web | ⏳ **PRÓXIMO PASSO** |
+| **Fase 2** | Serviço `systemd` da API, Widget Web, Sophos Firewall e SSL | ⏳ **PRÓXIMO PASSO** |
 
 ---
 
 ## 📚 4. Documentos de Referência Rápida
 
+* [**CONTEXTO_ATUAL_DO_PROJETO.md**](CONTEXTO_ATUAL_DO_PROJETO.md): **Guia operacional diário** (como ligar a API, testar perguntas e operar o servidor `bulma` por conta própria ou com o Gemini).
 * [GUIA_IMPLANTACAO_IA_CFA.md](docs/GUIA_IMPLANTACAO_IA_CFA.md): Manual técnico passo a passo com todos os comandos de terminal validados.
 * [GUIA_SINCRONIZACAO_E_ATUALIZACAO.md](docs/GUIA_SINCRONIZACAO_E_ATUALIZACAO.md): Como atualizar o Git e registrar etapas concluídas.
 * [CONVERSA_E_PLANEJAMENTO.md](docs/CONVERSA_E_PLANEJAMENTO.md): Histórico e justificativas técnicas das decisões tomadas.
